@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111914">
+  <meta name="description" content="VolunteerHub mission control for events, volunteers, signups, and attendance.">
+  <title>VolunteerHub | Mission control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="VolunteerHub home" data-view="overview">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-copy"><strong>volunteer<span>hub</span></strong><small>FIELD OPERATIONS</small></span>
+      </a>
+
+      <div class="side-label">Workspace</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-link is-active" type="button" data-view="overview">
+          <span class="nav-symbol" aria-hidden="true">◈</span><span>Mission overview</span><span class="nav-dot"></span>
+        </button>
+        <button class="nav-link" type="button" data-view="events">
+          <span class="nav-symbol" aria-hidden="true">◇</span><span>Events</span><span class="nav-count" id="nav-event-count">0</span>
+        </button>
+        <button class="nav-link" type="button" data-view="volunteers">
+          <span class="nav-symbol" aria-hidden="true">◎</span><span>Volunteers</span><span class="nav-count" id="nav-volunteer-count">0</span>
+        </button>
+        <button class="nav-link" type="button" data-view="signups">
+          <span class="nav-symbol" aria-hidden="true">↗</span><span>Signups</span>
+        </button>
+        <button class="nav-link" type="button" data-view="attendance">
+          <span class="nav-symbol" aria-hidden="true">✓</span><span>Attendance</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="side-mission">
+        <div class="orbit-mark" aria-hidden="true"><span></span></div>
+        <p class="eyebrow">GOOD WORK, TOGETHER</p>
+        <p class="side-mission-title">Small actions.<br>Lasting change.</p>
+        <span class="side-mission-note">Your community is in motion.</span>
+      </div>
+      <div class="sidebar-footer">
+        <span class="connection-light" id="connection-light"></span>
+        <span id="connection-label">Connecting to field data</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="icon-button menu-toggle" type="button" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span aria-hidden="true">☰</span>
+        </button>
+        <div class="breadcrumbs"><span>VolunteerHub</span><span class="crumb-slash">/</span><strong id="breadcrumb-current">Mission overview</strong></div>
+        <div class="topbar-actions">
+          <span class="today-label" id="today-label"></span>
+          <button class="button button-dark button-small" type="button" data-create="signup"><span aria-hidden="true">＋</span> New signup</button>
+          <div class="user-stamp" aria-label="Community coordinator">CH</div>
+        </div>
+      </header>
+
+      <div class="api-banner" id="api-banner" role="status" hidden>
+        <span class="banner-icon" aria-hidden="true">!</span>
+        <span id="api-banner-message">Waiting for the VolunteerHub API.</span>
+        <button class="text-button" id="retry-load" type="button">Try again</button>
+      </div>
+
+      <section class="view-panel is-visible" id="view-overview" data-panel="overview">
+        <div class="page-heading overview-heading">
+          <div><p class="eyebrow eyebrow-green">MONDAY, MADE MEANINGFUL</p><h1>Good work<br><span>starts here.</span></h1></div>
+          <p class="heading-note">One clear view of the people, places, and plans making change happen.</p>
+        </div>
+
+        <section class="mission-hero" aria-label="Community mission">
+          <div class="hero-copy">
+            <span class="hero-kicker"><span class="pulse-dot"></span> YOUR COMMUNITY, IN MOTION</span>
+            <h2>Show up for<br>something <em>real.</em></h2>
+            <p>Every hour given makes a neighborhood stronger. Here’s what your team is building next.</p>
+            <button class="button button-lime" type="button" data-view="events">Explore upcoming events <span aria-hidden="true">↗</span></button>
+            <div class="hero-footnote"><span class="tiny-spark" aria-hidden="true">✳</span><span>People-powered change, one day at a time.</span></div>
+          </div>
+          <div class="hero-visual">
+            <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&w=1100&q=85" alt="Community volunteers working together outdoors">
+            <div class="photo-shade"></div>
+            <div class="hero-photo-label"><span class="label-stamp">VH</span><span><strong>Good things grow</strong><small>when we grow them together.</small></span></div>
+            <div class="hero-number"><strong id="hero-volunteer-count">0</strong><span>people<br>ready to help</span></div>
+            <span class="hero-photo-index">01 / COMMUNITY</span>
+          </div>
+          <span class="hero-orbit orbit-one" aria-hidden="true"></span>
+          <span class="hero-orbit orbit-two" aria-hidden="true"></span>
+        </section>
+
+        <section class="stats-grid" aria-label="Community statistics">
+          <article class="stat-card stat-lime">
+            <div class="stat-top"><span class="stat-icon" aria-hidden="true">◎</span><span class="stat-period">COMMUNITY</span></div>
+            <strong class="stat-value" id="stat-volunteers">0</strong>
+            <div class="stat-bottom"><span>Volunteers</span><span class="stat-arrow" aria-hidden="true">↗</span></div>
+          </article>
+          <article class="stat-card stat-cream">
+            <div class="stat-top"><span class="stat-icon" aria-hidden="true">◇</span><span class="stat-period">ON THE CALENDAR</span></div>
+            <strong class="stat-value" id="stat-events">0</strong>
+            <div class="stat-bottom"><span>Events</span><span class="stat-arrow" aria-hidden="true">↗</span></div>
+          </article>
+          <article class="stat-card stat-terracotta">
+            <div class="stat-top"><span class="stat-icon" aria-hidden="true">↗</span><span class="stat-period">COMMITMENTS</span></div>
+            <strong class="stat-value" id="stat-signups">0</strong>
+            <div class="stat-bottom"><span>Signups</span><span class="stat-arrow" aria-hidden="true">↗</span></div>
+          </article>
+          <article class="stat-card stat-sage">
+            <div class="stat-top"><span class="stat-icon" aria-hidden="true">✓</span><span class="stat-period">SHOWED UP</span></div>
+            <strong class="stat-value" id="stat-attendance">0</strong>
+            <div class="stat-bottom"><span>Attended</span><span class="stat-arrow" aria-hidden="true">↗</span></div>
+          </article>
+        </section>
+
+        <section class="content-section dashboard-events-section">
+          <div class="section-heading">
+            <div><p class="eyebrow">THE NEXT CHAPTER</p><h2>Coming up <span class="heading-italic">soon</span></h2></div>
+            <button class="text-link" type="button" data-view="events">All events <span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="event-grid" id="dashboard-events"></div>
+        </section>
+
+        <section class="dashboard-bottom">
+          <div class="bottom-note">
+            <p class="eyebrow">A LITTLE MOMENTUM</p>
+            <h2>Good neighbors<br>make <span>good futures.</span></h2>
+            <p>Keep inviting people into the work. The next meaningful day is already taking shape.</p>
+            <button class="button button-outline" type="button" data-create="volunteer">Welcome a volunteer <span aria-hidden="true">＋</span></button>
+          </div>
+          <div class="recent-signups-panel">
+            <div class="panel-heading"><div><p class="eyebrow">FRESH COMMITMENTS</p><h3>Recently signed up</h3></div><button class="round-link" type="button" data-view="signups" aria-label="View all signups">↗</button></div>
+            <div class="mini-signup-list" id="dashboard-signups"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view-panel" id="view-events" data-panel="events" hidden>
+        <div class="page-heading list-heading">
+          <div><p class="eyebrow eyebrow-green">MAKE ROOM FOR GOOD</p><h1>Events <span>in the field.</span></h1></div>
+          <button class="button button-lime" type="button" data-create="event"><span aria-hidden="true">＋</span> Add event</button>
+        </div>
+        <div class="toolbar"><div class="toolbar-copy"><span class="live-marker"></span><span id="events-summary">Community calendar</span></div><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" data-filter="events" placeholder="Search events" aria-label="Search events"></label></div>
+        <div class="event-grid event-grid-wide" id="events-grid"></div>
+      </section>
+
+      <section class="view-panel" id="view-volunteers" data-panel="volunteers" hidden>
+        <div class="page-heading list-heading">
+          <div><p class="eyebrow eyebrow-green">THE HEART OF IT</p><h1>People who<br><span>show up.</span></h1></div>
+          <button class="button button-lime" type="button" data-create="volunteer"><span aria-hidden="true">＋</span> Add volunteer</button>
+        </div>
+        <div class="toolbar"><div class="toolbar-copy"><span class="live-marker"></span><span id="volunteers-summary">Community roster</span></div><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" data-filter="volunteers" placeholder="Search people" aria-label="Search volunteers"></label></div>
+        <div class="volunteer-grid" id="volunteers-grid"></div>
+      </section>
+
+      <section class="view-panel" id="view-signups" data-panel="signups" hidden>
+        <div class="page-heading list-heading">
+          <div><p class="eyebrow eyebrow-green">A PROMISE TO BE THERE</p><h1>Every yes<br><span>matters.</span></h1></div>
+          <button class="button button-lime" type="button" data-create="signup"><span aria-hidden="true">＋</span> Record signup</button>
+        </div>
+        <div class="toolbar"><div class="toolbar-copy"><span class="live-marker"></span><span id="signups-summary">Signup register</span></div><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" data-filter="signups" placeholder="Search signups" aria-label="Search signups"></label></div>
+        <div class="table-frame"><table><thead><tr><th>Volunteer</th><th>Event</th><th>Signup date</th><th>Status</th><th class="actions-heading">Actions</th></tr></thead><tbody id="signups-table"></tbody></table></div>
+      </section>
+
+      <section class="view-panel" id="view-attendance" data-panel="attendance" hidden>
+        <div class="page-heading list-heading">
+          <div><p class="eyebrow eyebrow-green">PRESENCE IS POWER</p><h1>Time well<br><span>spent.</span></h1></div>
+          <button class="button button-lime" type="button" data-create="attendance"><span aria-hidden="true">＋</span> Add attendance</button>
+        </div>
+        <div class="toolbar"><div class="toolbar-copy"><span class="live-marker"></span><span id="attendance-summary">Field attendance</span></div><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" data-filter="attendance" placeholder="Search records" aria-label="Search attendance"></label></div>
+        <div class="table-frame"><table><thead><tr><th>Volunteer</th><th>Event</th><th>Attended</th><th>Hours contributed</th><th class="actions-heading">Actions</th></tr></thead><tbody id="attendance-table"></tbody></table></div>
+      </section>
+
+      <footer class="page-footer"><span>VOLUNTEERHUB <span class="footer-separator">/</span> FIELD OPERATIONS</span><span>Built around showing up.</span></footer>
+    </main>
+  </div>
+
+  <dialog class="record-dialog" id="record-dialog" aria-labelledby="dialog-title">
+    <form class="dialog-card" id="record-form" method="dialog">
+      <div class="dialog-topline"><span class="dialog-kicker">FIELD DESK / RECORD</span><button class="icon-button dialog-close" type="button" id="dialog-close" aria-label="Close form">×</button></div>
+      <div class="dialog-heading"><p class="eyebrow eyebrow-green" id="dialog-eyebrow">ADD TO THE MISSION</p><h2 id="dialog-title">New record</h2><p id="dialog-description">Add a new record to your community workspace.</p></div>
+      <div class="form-fields" id="form-fields"></div>
+      <div class="form-error" id="form-error" role="alert" hidden></div>
+      <div class="dialog-actions"><button class="button button-quiet" type="button" id="dialog-cancel">Cancel</button><button class="button button-lime" type="submit" id="dialog-submit">Save record <span aria-hidden="true">↗</span></button></div>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>
